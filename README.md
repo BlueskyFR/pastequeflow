@@ -1,4 +1,4 @@
-<p align="center"><a href="https://git.io/pastequeflow" target="_blank"><img width="200" src=".images/PastequeFlow-logo.png" alt="PastequeFlow logo" /></a></p>
+<p align="center"><a href="https://git.io/pastequeflow" target="_blank"><img width="350" src=".images/PastequeFlow-logo.png" alt="PastequeFlow logo" /></a></p>
 
 :watermelon: This repository hosts PastequeFlow's source code!
 
