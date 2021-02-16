@@ -1,6 +1,7 @@
-# PastequeFlow
+<p align="center"><a href="https://git.io/pastequeflow" target="_blank"><img width="200" src=".images/PastequeFlow-logo.png" alt="PastequeFlow logo" /></a></p>
 
-This repository hosts PastequeFlow's source code.
+:watermelon: This repository hosts PastequeFlow's source code!
+
 PastequeFlow is a wrapper around TensorFlow and Keras, using an Object-Oriented approach.
 
 Keras is used first and TensorFlow is used directly when more appropriate.
