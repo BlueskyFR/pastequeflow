@@ -12,7 +12,7 @@ As of now, it is recommended to develop it using git submodules.
 
 ## Dependencies
 
-The dependencies can be loaded into a (existing or not) conda environment can be installed by importing `environment.yml`:
+The dependencies can be loaded into a (existing or not) conda environment by importing `environment.yml`:
 
 ```bash
 # This will create/add the dependencies to the "tf" env (default name);
