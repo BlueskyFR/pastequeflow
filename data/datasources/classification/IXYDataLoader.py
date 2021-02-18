@@ -5,7 +5,7 @@ from numpy import ndarray
 from pandas import DataFrame
 
 
-class IDatasource(ABC):
+class IXYDataLoader(ABC):
 
     @property
     @abstractmethod

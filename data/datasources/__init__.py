@@ -1,1 +1,1 @@
-from .CSVLoader import CSVLoader
+from . import classification

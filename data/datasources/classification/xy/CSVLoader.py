@@ -1,13 +1,13 @@
-from typing import Tuple, List, Dict
+from typing import List, Dict
 import numpy as np
 from numpy import ndarray
 import pandas as pd
 from pandas import DataFrame
 
-from .. import IDatasource
+from .. import IXYDataLoader
 
 
-class CSVLoader(IDatasource):
+class CSVLoader(IXYDataLoader):
     def __init__(self, train_val_csv_path: str, test_csv_path: str, x_col: str, y_col: str):
         self.__test_csv_path = test_csv_path
         self.__x_col = x_col
