@@ -1,3 +1,3 @@
-from . import data
+from .classification import data
 from .IModel import IModel
-from .Pipeline import Pipeline
+from pastequeflow.classification.ClassificationPipeline import Pipeline
