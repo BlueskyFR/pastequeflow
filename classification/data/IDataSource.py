@@ -1,12 +1,12 @@
 from abc import ABC, abstractmethod
-from typing import List, Dict, Tuple
+from typing import List, Dict, Tuple, Union
 
 from numpy import ndarray
 from pandas import DataFrame
 from tensorflow.python.data import Dataset
 
 
-class IDataLoader(ABC):
+class IDataSource(ABC):
 
     @property
     @abstractmethod
@@ -20,25 +20,22 @@ class IDataLoader(ABC):
 
     @property
     @abstractmethod
-    def classes_repartition(self) -> DataFrame:
+    def classes_repartition(self) -> Union[DataFrame, None]:
         pass
 
     @property
     @abstractmethod
-    def weights(self) -> Dict[int, float]:
-        pass
-
-    # The following three methods both return a tuple (str, Dataset): (img_dir_path, x_y_str_dataset)
-    # The str corresponds to the folder in which the images have to be read
-
-    @abstractmethod
-    def get_training_dataset(self) -> Tuple[str, Dataset]:
+    def weights(self) -> Union[Dict[int, float], None]:
         pass
 
     @abstractmethod
-    def get_validation_dataset(self) -> Tuple[str, Dataset]:
+    def get_training_dataset(self) -> Dataset:
         pass
 
     @abstractmethod
-    def get_testing_dataset(self) -> Tuple[str, Dataset]:
+    def get_validation_dataset(self) -> Dataset:
+        pass
+
+    @abstractmethod
+    def get_testing_dataset(self) -> Dataset:
         pass

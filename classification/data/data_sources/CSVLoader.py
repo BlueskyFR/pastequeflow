@@ -5,10 +5,10 @@ import pandas as pd
 from pandas import DataFrame
 from tensorflow.python.data import Dataset
 
-from . import IDataLoader
+from .. import IDataSource
 
 
-class CSVLoader(IDataLoader):
+class CSVLoader(IDataSource):
     def __init__(self, train_val_csv_path: str, test_csv_path: str, x_col: str, y_col: str):
         self.__test_csv_path = test_csv_path
         self.__x_col = x_col

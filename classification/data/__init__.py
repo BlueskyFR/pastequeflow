@@ -1,4 +1,4 @@
-from .IDatasetBuilder import IDatasetBuilder
+from .IDataSource import IDataSource
 from .IDatasetPreprocessor import IDatasetPreprocessor
 
-from . import datasources, dataset_preprocessors, dataset_builders
+from . import data_sources, dataset_preprocessors
