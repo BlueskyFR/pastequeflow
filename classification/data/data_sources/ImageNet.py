@@ -45,13 +45,15 @@ class ImageNet(IDataSource):
     def _load_datasets(self) -> None:
         train_ds = self._get_file_list_dataset(self._train_dir, shuffle=True)
         file_count = len(train_ds)
+        print(f"{file_count} files loaded from the training dataset!")
         
         # Load the validation dataset if a directory was specified,
         # otherwise split the training dataset
         if self._val_dir is not None:
             val_ds = self._get_file_list_dataset(self._val_dir)
+            print(f"{len(val_ds)} files loaded from the validation dataset!")
         else:
-            val_size = file_count * self._validation_split
+            val_size = int(file_count * self._validation_split)
             val_ds = train_ds.take(val_size)
             train_ds = train_ds.skip(val_size)
         
@@ -59,7 +61,7 @@ class ImageNet(IDataSource):
         if self._test_dir is not None:
             test_ds = self._get_file_list_dataset(self._test_dir)
         else:
-            test_size = file_count * self._testing_split
+            test_size = int(file_count * self._testing_split)
             test_ds = train_ds.take(test_size)
             train_ds = train_ds.skip(test_size)
         
@@ -70,7 +72,7 @@ class ImageNet(IDataSource):
         
     def _get_file_list_dataset(self, directory: str, shuffle: bool = False) -> Dataset:
         # Get the file list from directory
-        ds = Dataset.list_files(Path(directory) / "*/*", shuffle=False)
+        ds = Dataset.list_files(str(Path(directory) / "*/*"), shuffle=False)
         if shuffle:
             # Shuffle the filenames
             ds = ds.shuffle(len(ds), reshuffle_each_iteration=False)
@@ -83,10 +85,10 @@ class ImageNet(IDataSource):
             class_id: class_names[1]
             for class_id, class_names in json_mappings.items()
         }
-        self._filenames_mappings = {
-            class_names[0]: class_id
-            for class_id, class_names in json_mappings.items()
-        }
+        self._synset_wnip_classes = np.array([
+            class_names[0]
+            for _, class_names in json_mappings.items()
+        ])
         self._classes = np.array([word_id for _, word_id in json_mappings.values()])
     
     def _map_datasets(self):
@@ -98,8 +100,8 @@ class ImageNet(IDataSource):
                 rewrite="\1" # Rewrite by replacing all by the first parenthesized group
             )
             
-            class_id = self._filenames_mappings[synset_wnid]
-            one_hot = class_id == self._classes
+            #class_id = self._filenames_mappings[synset_wnid]
+            one_hot = synset_wnid == self._synset_wnip_classes
             return tf.argmax(one_hot)
         
         def decode_img(img) -> tf.Tensor:
@@ -108,7 +110,7 @@ class ImageNet(IDataSource):
             # Resize the image to the desired size
             return tf.image.resize(img, self._images_size)
         
-        def process_path(file_path: tf.Tensor) -> Tuple[tf.Tensor, tf.Tensor]:
+        def process_path(file_path: tf.Tensor):
             label = get_label(file_path)
             # Load the raw data from the file as a string
             img = tf.io.read_file(file_path)
