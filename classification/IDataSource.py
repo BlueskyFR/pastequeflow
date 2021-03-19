@@ -39,3 +39,10 @@ class IDataSource(ABC):
     @abstractmethod
     def get_testing_dataset(self) -> Dataset:
         pass
+    
+    def get_all_datasets(self) -> Tuple[Dataset, Dataset, Dataset]:
+        return (
+            self.get_training_dataset(),
+            self.get_validation_dataset(),
+            self.get_testing_dataset()
+        )

@@ -20,8 +20,7 @@ class ImageNet(IDataSource):
             train_dir: str,
             class_mappings_path: str,
             val_dir: str = None, validation_split: float = .2,
-            test_dir: str = None, testing_split: float = .1,
-            desired_images_size: List[int] = [32, 32] # [new_height, new_width]
+            test_dir: str = None, testing_split: float = .1
     ):
         # Safety checks
         if val_dir is None and validation_split is None \
@@ -35,7 +34,6 @@ class ImageNet(IDataSource):
         self._validation_split = validation_split
         self._test_dir = test_dir
         self._testing_split = testing_split
-        self._images_size = desired_images_size
         
         # Load the datasets and the mappings
         self._load_datasets()
@@ -100,15 +98,15 @@ class ImageNet(IDataSource):
                 rewrite="\1" # Rewrite by replacing all by the first parenthesized group
             )
             
-            #class_id = self._filenames_mappings[synset_wnid]
             one_hot = synset_wnid == self._synset_wnip_classes
             return tf.argmax(one_hot)
         
         def decode_img(img) -> tf.Tensor:
             # Convert the compressed string to a 3D uint8 tensor
-            img = tf.io.decode_jpeg(img, channels=3)
+            #img = tf.io.decode_jpeg(img, channels=3)
+            return tf.io.decode_jpeg(img, channels=3)
             # Resize the image to the desired size
-            return tf.image.resize(img, self._images_size)
+            #return tf.image.resize(img, self._images_size)
         
         def process_path(file_path: tf.Tensor):
             label = get_label(file_path)
@@ -116,6 +114,11 @@ class ImageNet(IDataSource):
             img = tf.io.read_file(file_path)
             img = decode_img(img)
             return img, label
+        
+        # Save the datasets lengths since map breaks len(ds)
+        self._train_ds_len =len(self._train_ds)
+        self._val_ds_len = len(self._val_ds)
+        self._test_ds_len = len(self._test_ds)
         
         # Map the 3 datasets files to their corresponding (image, label) pairs
         self._train_ds = self._train_ds.map(process_path, num_parallel_calls=AUTOTUNE)
@@ -148,3 +151,5 @@ class ImageNet(IDataSource):
 
     def get_testing_dataset(self) -> Dataset:
         return self._test_ds
+    
+    #TODO: implement datasets lengths getters here to get them later in the pipeline using these

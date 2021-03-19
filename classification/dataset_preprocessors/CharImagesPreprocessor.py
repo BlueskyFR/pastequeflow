@@ -4,7 +4,7 @@ from tensorflow.keras import Sequential
 from tensorflow.keras.layers.experimental.preprocessing import *
 from tensorflow.python.data import Dataset
 
-from pastequeflow.classification.data import IDatasetPreprocessor
+from .. import IDatasetPreprocessor
 
 
 class CharImagesPreprocessor(IDatasetPreprocessor):
