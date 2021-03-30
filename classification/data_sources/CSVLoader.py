@@ -1,13 +1,14 @@
-from typing import Tuple, List, Dict
+from typing import List, Dict, Tuple
 import numpy as np
 from numpy import ndarray
 import pandas as pd
 from pandas import DataFrame
+from tensorflow.python.data import Dataset
 
-from .. import IDatasource
+from .. import IDataSource
 
 
-class CSVLoader(IDatasource):
+class CSVLoader(IDataSource):
     def __init__(self, train_val_csv_path: str, test_csv_path: str, x_col: str, y_col: str):
         self.__test_csv_path = test_csv_path
         self.__x_col = x_col
@@ -48,7 +49,7 @@ class CSVLoader(IDatasource):
             for i, class_name in enumerate(self.__classes)
         }
 
-    def get_train_val_data(self) -> List[List[str]]: #List[Tuple[str, str]]:
+    def get_train_val_data(self) -> List[List[str]]:  #List[Tuple[str, str]]:
         # Convert the dataframe to a numpy tuples array: [(x, y), ...]
         # return self.__train_val_data.astype(str).to_records(index=False).tolist()
         return self.__train_val_data.astype(str).values.tolist()
@@ -57,6 +58,15 @@ class CSVLoader(IDatasource):
         df = self.__load_csv(path=self.__test_csv_path)
         # Convert the dataframe to a numpy tuples array: [(x, y), ...]
         return df[self.__x_col].to_list()
+
+    def get_training_dataset(self) -> Tuple[str, Dataset]:
+        pass
+
+    def get_validation_dataset(self) -> Tuple[str, Dataset]:
+        pass
+
+    def get_testing_dataset(self) -> Tuple[str, Dataset]:
+        pass
 
     def __load_csv(self, path):
         df = pd.read_csv(path)
