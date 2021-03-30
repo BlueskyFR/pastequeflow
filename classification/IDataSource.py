@@ -46,3 +46,26 @@ class IDataSource(ABC):
             self.get_validation_dataset(),
             self.get_testing_dataset()
         )
+    
+    @property
+    @abstractmethod
+    def train_ds_len(self) -> int:
+        pass
+    
+    @property
+    @abstractmethod
+    def val_ds_len(self) -> int:
+        pass
+    
+    @property
+    @abstractmethod
+    def test_ds_len(self) -> int:
+        pass
+    
+    def get_all_lengths(self) -> Tuple[int, int, int]:
+        return (
+            self.train_ds_len,
+            self.val_ds_len,
+            self.test_ds_len
+        )
+        

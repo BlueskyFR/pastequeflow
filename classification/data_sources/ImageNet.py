@@ -152,4 +152,14 @@ class ImageNet(IDataSource):
     def get_testing_dataset(self) -> Dataset:
         return self._test_ds
     
-    #TODO: implement datasets lengths getters here to get them later in the pipeline using these
+    @property
+    def train_ds_len(self) -> int:
+        return self._train_ds_len
+    
+    @property
+    def val_ds_len(self) -> int:
+        return self._val_ds_len
+    
+    @property
+    def test_ds_len(self) -> int:
+        return self._test_ds_len

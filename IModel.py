@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List, Union
+from typing import List, Tuple, Union
 
 from tensorflow.keras import Model
 from tensorflow.keras.metrics import Metric
@@ -7,7 +7,7 @@ from tensorflow.keras.metrics import Metric
 
 class IModel(ABC):
     @abstractmethod
-    def get_model(self, output_classes_count: int, metrics: Union[List[Metric], List[str]]) -> Model:
+    def get_model(self, input_shape: Tuple[int, ...], output_classes_count: int, metrics: Union[List[Metric], List[str]]) -> Model:
         """Returns a compiled model
 
         Args:
