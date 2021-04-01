@@ -16,11 +16,11 @@ AUTOTUNE = tf.data.AUTOTUNE
 
 class ImageNet(IDataSource):
     def __init__(
-            self,
-            train_dir: str,
-            class_mappings_path: str,
-            val_dir: str = None, validation_split: float = .2,
-            test_dir: str = None, testing_split: float = .1
+        self,
+        train_dir: str,
+        class_mappings_path: str,
+        val_dir: str = None, validation_split: float = .2,
+        test_dir: str = None, testing_split: float = .1
     ):
         # Safety checks
         if val_dir is None and validation_split is None \

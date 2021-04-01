@@ -56,6 +56,10 @@ class Pipeline(IPipeline):
         model.fit(
             train_ds,
             validation_data=val_ds,
+            #class_weight=self._data_source.weights,
             epochs=self._epochs,
             callbacks=[tensorboard_callback]
         )
+        
+        #TODO: model getter
+        return model

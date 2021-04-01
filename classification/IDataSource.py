@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from typing import List, Dict, Tuple, Union
 
 from numpy import ndarray
-from pandas import DataFrame
+from pandas import Series
 from tensorflow.python.data import Dataset
 
 
@@ -20,7 +20,7 @@ class IDataSource(ABC):
 
     @property
     @abstractmethod
-    def classes_repartition(self) -> Union[DataFrame, None]:
+    def classes_repartition(self) -> Union[Series, None]:
         pass
 
     @property
